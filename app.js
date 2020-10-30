@@ -8,7 +8,7 @@ const router = express.Router();
 /* Middlewares */
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true })); 
-app.use('/users', usersRouter); 
+app.use('/user', usersRouter); 
 
 app.listen(PORT, console.log(`Server is listening on ${PORT}`)); 
 
