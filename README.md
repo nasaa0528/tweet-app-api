@@ -4,6 +4,7 @@ Dependencies:
 - bcrypt        -   for calculating hash and comparing user hash 
 - nodemon       -   for development dependency, listen realtime changes on source code
 - jsonwebtoken  -   for jwt token generation and management
+- firestore     -   Firestore collection for storing user data
 
 ## Run in development environment
 `$: npm run dev`
