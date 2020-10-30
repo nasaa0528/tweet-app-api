@@ -1,0 +1,19 @@
+{
+  "name": "tweet-app-api",
+  "version": "1.0.0",
+  "description": "apis for tweet-like application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nasaa0528/tweet-app-api.git"
+  },
+  "author": "Nasantogtokh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nasaa0528/tweet-app-api/issues"
+  },
+  "homepage": "https://github.com/nasaa0528/tweet-app-api#readme"
+}
