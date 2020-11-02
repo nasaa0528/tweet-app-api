@@ -59,7 +59,8 @@ const loginHandler = async (req, res, next) => {
       data = err; 
     }
     res.status(status).json(data); 
-};
+  };
+}
 
 const signupHandler = (req, res, next) => {
   res.json(req.body); 

@@ -1,6 +1,6 @@
 const express = require("express"); 
 const router = express.Router(); 
-const controller = require("./controller")
+const controller = require("./controller"); 
 
 /* Public routes */
 router.post('/login', controller.loginHandler);
