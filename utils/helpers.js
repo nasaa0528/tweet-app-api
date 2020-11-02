@@ -3,8 +3,15 @@ exports.isEmail = (usernameEmail) => {
   return re.test(String(usernameEmail).toLowerCase());
 }; 
 
-exports.parser = (usernameEmail, password) => {
-  if (!usernameEmail || !password) {
+exports.usernameParser = (usernameEmail) => {
+  if (!usernameEmail) {
+    return false; 
+  }
+  return true; 
+}
+
+exports.passwordParser = (password) => {
+  if (!password) {
     return false; 
   }
   return true; 
@@ -18,5 +25,5 @@ exports.isItOnlyOne = (snapshot) => {
   if (snapshot.size !== 1) {
     return false; 
   }
-  return true; 
+  else return true;
 }

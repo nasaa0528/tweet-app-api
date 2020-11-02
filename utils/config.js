@@ -15,3 +15,4 @@ exports.db = firebase.firestore();
 
 //module.exports = db;
 
+exports.jwt_config ={ "secret": "49a44cbeaa62456326b905c0abab43ec" };
