@@ -8,17 +8,17 @@ const db = config.db;
 const jwt_config = config.jwt_config; 
 
 const loginHandler = async (req, res, next) => {
-  const usernameEmail = req.body.usernameEmail; 
-  const password = req.body.password;
-  var userId;
-  var passwordHash;
-  var username;
-  var jwtToken;
-  var fullname; 
-  var avatar;
-  var snapshot
-
   try {
+    const usernameEmail = req.body.usernameEmail.trim().toLowerCase(); 
+    const password = req.body.password;
+    var userId;
+    var passwordHash;
+    var username;
+    var jwtToken;
+    var fullname; 
+    var avatar;
+    var snapshot
+
     if (!helper.usernameParser(usernameEmail)) {
       throw {'status': 400, 'statusTxt': 'Empty username' , "data": "Login name/email field cannot be empty!" };
     }
@@ -29,38 +29,39 @@ const loginHandler = async (req, res, next) => {
 
     const isEmail = helper.isEmail(usernameEmail); 
     const userRef = db.collection("users"); 
-  
+
     if (isEmail) {
       snapshot = await userRef.where('email', '==', usernameEmail).get(); 
     } else {
       snapshot = await userRef.where('username', '==', usernameEmail).get(); 
     }
-
     if (helper.isItOnlyOne(snapshot)){
       const doc = snapshot.docs[0];
-        userId = doc.id;
-        username = doc.data().username;
-        fullname = helper.nameConcat(doc.data().firstname, doc.data().lastname);
-        avatar = doc.data().avatar;
-        passwordHash = doc.data().hash;
-    } 
+      userId = doc.id;
+      username = doc.data().username;
+      fullname = helper.nameConcat(doc.data().firstname, doc.data().lastname);
+      avatar = doc.data().avatar;
+      passwordHash = doc.data().hash;
+    }
     else {
       throw { 'status': 401,  'statusTxt': 'Unauthorized user!', 'data': 'Unauthorized request' }; 
     }
 
     if (bcrypt.compareSync(password, passwordHash)){
+      console.log("her1e");
       const token = jwt.sign({ id: userId, name: fullname, usr: username, avt: avatar }, jwt_config.secret, { expiresIn: '7d' });
       return res.json({token, msg: "Successfully authenticated"}); 
-    } 
+    }
     else {
+      console.log("here");
       throw {'status': 401, 'statusTxt': 'Unauthorized user!', 'data': 'Unauthorized request'};
     }
-  } 
+  }
   catch (err) {
     let {status, statusTxt, data} = err; 
     if (!status) {
       status = 500; 
-      statusTxt = err.message; 
+      statusTxt = err.statusTxt; 
       data = err; 
     }
     res.status(status).json(data); 
@@ -94,34 +95,75 @@ const signupHandler = async (req, res, next) => {
     if (password !== confirm) {
       throw {'status': 400, 'statusTxt': "Password and confirm email doesn't match!", 'data': "Password and confirm password doesn't match!"}; 
     }
-    
+
     const saltRounds = 10; 
     let hash = await bcrypt.hash(password, saltRounds); 
 
     const docRef = await userRef.add({
       username: username,
       email: email,
-      password: hash
+      hash: hash,
+      followers: 0, 
+      following: 0
     });
-    
+
     const token = jwt.sign({ id: docRef.id, name: null, usr: username, avt: null }, jwt_config.secret, { expiresIn: '7d' });
-    console.log(token);
     return res.json({token, msg: "Successfully signed up"});
   }
   catch (err) {
     console.log(err);
-    let {status, statusTxt, data} = err; 
+    let {status, statusTxt, data} = err;
     if (!status){
-      status = 500; 
-      statusTxt = err.message; 
-      data = err; 
+      status = 500;
+      statusTxt = err.statusTxt;
+      data = err;
     }
-    res.status(status).json(data); 
+    res.status(status).json(data);
   }
-}; 
+};
 
 const updateHandler = (req, res, next) => {
-  res.json(req.body); 
+  try {
+    var avatar = req.body.avatar;
+    var firstname = req.body.firstname;
+    var lastname = req.body.lastname;
+    var bio = req.body.bio;
+    var user = req.user; 
+    var usertId = user.id;
+    //var username = payload.usr; 
+    if (!avatar) {
+      throw {"status": 400, "statusTxt": "avatar cannot be empty", "data": "Avatar cannot be empty, please upload the avatar"};
+    }
+    if (!firstname) {
+      throw {"status": 400, "statusTxt": "firstname cannot be empty", "data": "firstname cannot be empty!"};
+    }
+    if (!lastname) {
+      throw {"status": 400, "statusTxt": "lastname cannot be empty", "data": "lastname cannot be empty"};
+    }
+    if(!bio) {
+      throw {"status": 400, "statusTxt": "Bio cannot be empty", "data": "bio cannot be empty"};
+    }
+    db.collection("users").doc(usertId).update({
+      "avatar": avatar,
+      "firstname": firstname,
+      "lastname": lastname,
+      "bio": bio
+    })
+      .then(() => {
+        res.json({ "msg": "Successfully updated!" });
+      })
+
+  }
+  catch (err) {
+    console.log(err);
+    let {status, statusTxt, data} = err;
+    if (!status) {
+      status = 500;
+      statusTxt = err.statusTxt;
+      data = err;
+    }
+    res.status(status).json(data);
+  }
 };
 
 const getAllHandler = (req, res, next) => {

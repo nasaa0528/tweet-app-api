@@ -12,6 +12,7 @@ exports.verify = function(req, res, next){
   let payload
   try{
     payload = jwt.verify(accessToken, jwt_config.secret);
+    req.user = payload;
     next();
   }
   catch(e){
