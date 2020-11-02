@@ -1,83 +1,64 @@
-const jwt = require("jsonwebtoken"); 
+const jwt = require('jsonwebtoken'); 
+const helper = require('../utils/helpers.js');  
+const dbConfig = require('../utils/config.js'); 
+const bcrypt = require('bcrypt');
+
 const jwt_config ={ "secret": "49a44cbeaa62456326b905c0abab43ec" };
-const helper = require('../utils/helpers'); 
+const db = dbConfig.db;
 
-
-
-const dbConfig = require("../utils/config.js"); 
-const db = dbConfig.db; 
 
 const loginHandler = async (req, res, next) => {
   const usernameEmail = req.body.usernameEmail; 
-  const password = req.body.password; 
-  console.log(usernameEmail, password); 
+  const password = req.body.password;
+  var userId;
+  var passwordHash;
+  var username;
+  var jwtToken;
+  var fullname; 
+  var avatar;
+  var snapshot
+
   const isEmail = helper.isEmail(usernameEmail); 
-  console.log(isEmail); 
-  //var user; 
-  //var response; 
-  //if (!loginName || !password){
-    //response = { 'msg': "Login name/email or Password field cannot be empty!" }; 
-    //throw "Username or password must be provided!"; 
-    //res.json(response); 
-  //}
-  //else {
-  //const userRef = db.collection("users"); 
+  const userRef = db.collection("users"); 
 
-  //[> DB read and authenticate user <]
-  //async function authenticate(userRef, username) {
-    //const isUsername = userRef.where('username', '==', username).get(); 
-    //const isEmail = userRef.where('email', '==', username).get(); 
+  try {
+    if (!helper.parser(usernameEmail, password)) {
+      return res.json({ "msg": "Login name/email or Password field cannot be empty!" });
+    }
 
-    //const [usernameSnap, emailSnap] = await Promise.all([
-      //isUsername, 
-      //isEmail
-    //]);
+    if (isEmail) {
+      snapshot = await userRef.where('email', '==', usernameEmail).get(); 
+    } else {
+      snapshot = await userRef.where('username', '==', usernameEmail).get(); 
+    }
 
-    //const usernameArray = usernameSnap.docs; 
-    //const emailArray = emailSnap.docs; 
+    if (helper.isItOnlyOne(snapshot)){
+      snapshot.forEach((doc) => {
+        userId = doc.id;
+        username = doc.data().username;
+        fullname = helper.nameConcat(doc.data().firstname, doc.data().lastname);
+        avatar = doc.data().avatar;
+        passwordHash = doc.data().hash;
+      });
+    } else {
+      return res.json({ "msg": `Login name: ${usernameEmail} is not found!` }); 
+    }
 
-    //const userArray = usernameArray.concat(emailArray); 
-    
-    //return userArray; 
-  //}
-
-  //authenticate(userRef, loginName).then(result => {
-    //if(result.length !== 1){
-      //console.log(`${loginName} is not found!`); 
-      //response = {'msg': loginName + " is not found "}; 
-    //} else {
-      //result.forEach(doc => {
-        //if (doc.data().username === loginName || doc.data().email === loginName ){
-          //let hash = doc.data().hash; 
-          //if (hash === password) {
-            //console.log(`Create jwt token for user ${loginName}`); 
-            //response = {"msg": "token is created successfully!"}; 
-            //// response = token; 
-          //}
-          //else {
-            //throw {status: 401, statusTxt: "Unauth", data: {}};
-            //response = {'msg': "Incorrect password"};
-          //}
-        //}
-      //}); 
-    //}
-    //res.json(response);
-  //})
-  // }
-
-  /*
-   *try{}
-   *catch(e) {
-   *  let {status, statusTxt, data} = e;
-   *  if(!status) {
-   *    status = 500;
-   *    statusTxt = e.message;
-   *    data = e;
-   *  }
-   *  res.status(status).json(data);
-   *}
-   */
-    res.json(req.body); 
+    if (bcrypt.compareSync(password, passwordHash)){
+      const token = jwt.sign({ id: userId, name: fullname, usr: username, avt: avatar }, jwt_config.secret, { expiresIn: '7d' });
+      return res.json({token, msg: "Successfully authenticated"}); 
+    } else {
+      return res.status(401).json({'status': 'Unauthorized user', 'msg': 'Incorrect password'});  
+    }
+  } 
+  catch (err) {
+    let {status, statusTxt, data} = err; 
+    if (!status) {
+      status = 500; 
+      statusTxt = err.message; 
+      data = err; 
+    }
+    res.status(status).json(data); 
 };
 
 const signupHandler = (req, res, next) => {
