@@ -104,7 +104,8 @@ const signupHandler = async (req, res, next) => {
       email: email,
       hash: hash,
       followers: 0, 
-      following: 0
+      following: 0,
+      created: config.timestamp
     });
 
     const token = jwt.sign({ id: docRef.id, name: null, usr: username, avt: null }, jwt_config.secret, { expiresIn: '7d' });
@@ -122,7 +123,7 @@ const signupHandler = async (req, res, next) => {
   }
 };
 
-const updateHandler = (req, res, next) => {
+const updateHandler = async (req, res, next) => {
   try {
     var avatar = req.body.avatar;
     var firstname = req.body.firstname;
@@ -143,16 +144,13 @@ const updateHandler = (req, res, next) => {
     if(!bio) {
       throw {"status": 400, "statusTxt": "Bio cannot be empty", "data": "bio cannot be empty"};
     }
-    db.collection("users").doc(usertId).update({
+    await db.collection("users").doc(usertId).update({
       "avatar": avatar,
       "firstname": firstname,
       "lastname": lastname,
       "bio": bio
     })
-      .then(() => {
-        res.json({ "msg": "Successfully updated!" });
-      })
-
+    res.json({ "msg": "Successfully updated!" });
   }
   catch (err) {
     console.log(err);
@@ -167,17 +165,27 @@ const updateHandler = (req, res, next) => {
 };
 
 const getAllHandler = (req, res, next) => {
-  res.send("All users must be retrieved here!"); 
+  var page = req.params.page;
+  const pageSize = 5;
+  var startAt = (page-1) * pageSize + 1; 
+  var endAt = page * pageSize; 
+  console.log(startAt, endAt); 
+  res.send(page);
 };
+
+const getUserHandler = (req, res, next) => {
+  res.send(req.params.id); 
+}
 
 const getProfileHandler = (req, res, next) => {
   res.send(req.params.id); 
 }
 
 module.exports = {
-  loginHandler, 
-  signupHandler, 
-  updateHandler, 
-  getAllHandler, 
-  getProfileHandler
+  loginHandler,
+  signupHandler,
+  updateHandler,
+  getAllHandler,
+  getProfileHandler,
+  getUserHandler
 }
