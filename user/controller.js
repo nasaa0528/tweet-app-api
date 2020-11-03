@@ -164,28 +164,63 @@ const updateHandler = async (req, res, next) => {
   }
 };
 
-const getAllHandler = (req, res, next) => {
-  var page = req.params.page;
-  const pageSize = 5;
-  var startAt = (page-1) * pageSize + 1; 
-  var endAt = page * pageSize; 
-  console.log(startAt, endAt); 
-  res.send(page);
-};
+const getUserHandler = async (req, res, next) => {
+  try {
+    const requestedId = req.params.id;
+    doc = await db.collection('users').doc(requestedId).get(); 
+    console.log('doc', doc.exists); 
+    if ( !doc.exists ) {
+      throw {'status': 400, 'statusTxt': 'invalid user', 'data': 'invalid user ID '};
+    }
+    var result = {
+      'id': doc.id, 
+      'username': doc.data().username, 
+      'fullname': helper.nameConcat(doc.data().firstname, doc.data().lastname), 
+      'bio': doc.data().bio, 
+      'followers': doc.data().followers, 
+      'following': doc.data().following
+      /* TODO */
+      /* posts section add here */
+    }
+    res.json(result); 
+  } catch (err) {
+    console.log(err);
+    let {status, statusTxt, data} = err;
+    if (!status) {
+      status = 500;
+      statusTxt = err.statusTxt;
+      data = err;
+    }
+    res.status(status).json(data);
+  }
+}; 
 
-const getUserHandler = (req, res, next) => {
-  res.send(req.params.id); 
-}
-
-const getProfileHandler = (req, res, next) => {
-  res.send(req.params.id); 
+const getProfileHandler = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    user = await db.collection("users").doc(userId).get();
+    if (!user.exists){
+      throw {"status": 400, "statusTxt": "User not found, malicous token", "data": "User not found!"};
+    }
+    var result = {'id': user.id, ...user.data()};
+    console.log(result);
+    res.send(result);
+  } catch (err) { 
+    console.log(err);
+    let {status, statusTxt, data} = err;
+    if (!status) {
+      status = 500;
+      statusTxt = err.statusTxt;
+      data = err;
+    }
+    res.status(status).json(data);
+  }
 }
 
 module.exports = {
   loginHandler,
   signupHandler,
   updateHandler,
-  getAllHandler,
   getProfileHandler,
   getUserHandler
 }

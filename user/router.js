@@ -7,7 +7,6 @@ router.post('/login', controller.loginHandler);
 router.post('/signup', controller.signupHandler);
 /* Private routes */
 router.post('/update', verify, controller.updateHandler);
-router.get('/all/:page', verify, controller.getAllHandler);
-router.get('/', controller.getProfileHandler);
-router.get('/:id', controller.getUserHandler)
+router.get('/', verify, controller.getProfileHandler);
+router.get('/:id', verify, controller.getUserHandler)
 module.exports = router; 
