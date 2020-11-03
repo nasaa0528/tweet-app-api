@@ -11,21 +11,21 @@ const getAllUsersHandler = async (req, res, next) => {
     const defalutPagesize = 20;
     var page = req.query.page || defaultPage;
     var pageSize = req.query.pagesize || defalutPagesize;
-    var result = [];
+    var users = [];
     var startAt = (page-1) * pageSize;
     var endAt = page * pageSize;
+    var result = {}; 
 
     if (page <= 0 || pageSize <= 0)
       throw {"status": 400, "statusTxt": "page number or page size must be positive", "data": "page number must be positive"};
     const snap = await db.collection('users').orderBy('created').get();
     const snapsize = snap.size;
     const meta = {
-      'Total users': snapsize,
-      'Requested page': page
+      'total_users': snapsize,
+      'requested_page': page
     };
-    result.push(meta);
     page = snap.docs.slice(startAt, endAt); 
-    meta['Total returned users'] = page.length; 
+    meta['total_returned_users'] = page.length; 
     page.forEach((doc) => {
       let user = {
         id: doc.id,
@@ -35,8 +35,10 @@ const getAllUsersHandler = async (req, res, next) => {
         followers: doc.data().followers,
         following: doc.data().following
       }
-      result.push(user);
+      users.push(user);
     })
+    result['meta'] = meta; 
+    result['users'] = users;
     res.json(result);
   } catch (err) {
     helper.errorHandler(res, err);
