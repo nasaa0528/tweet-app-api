@@ -27,3 +27,14 @@ exports.isItOnlyOne = (snapshot) => {
   }
   else return true;
 }
+
+exports.errorHandler = (res,err) => {
+  console.log(err); 
+  let {status, statusTxt, data} = err;
+  if (!status) {
+    status = 500;
+    statusTxt = err.statusTxt;
+    data = err;
+  }
+  res.status(status).json(data);
+}
