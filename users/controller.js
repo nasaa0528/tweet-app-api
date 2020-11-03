@@ -104,12 +104,22 @@ const signupHandler = async (req, res, next) => {
     var username = req.body.username.trim().toLowerCase();
     var password = req.body.password;
     var confirm = req.body.confirm;
+    var firstname = req.body.firstname; 
+    var lastname = req.body.lastname; 
+    var avatar = req.body.avatar || 'default_path'; 
     if (username.length <= 3) {
       throw {'status': 400, 'statusTxt': 'Username is less than 4 characters!', 'data': 'Username must be longer than 4 characters!'}; 
     }
 
     if(!helper.isEmail(email)) {
       throw { 'status': 400, 'statusTxt': 'Email is not valid', 'data': 'Email is not valid!'};
+    }
+    if (firstname.length === 0) {
+      throw {'status': 400, 'statusTxt': 'Firstname empty', 'data': 'Firstname cannot be empty'}; 
+    }
+    
+    if (lastname.length === 0) {
+      throw {'status': 400, 'statusTxt': 'Lastname empty', 'data': 'Lastname cannot be empty'}; 
     }
 
     const userRef = db.collection('users');
@@ -130,15 +140,18 @@ const signupHandler = async (req, res, next) => {
     let hash = await bcrypt.hash(password, saltRounds); 
 
     const docRef = await userRef.add({
+      firstname: firstname, 
+      lastname: lastname,
       username: username,
       email: email,
       hash: hash,
       followers: 0, 
       following: 0,
+      avatar: avatar,
       created: config.timestamp
     });
 
-    const token = jwt.sign({ id: docRef.id, name: null, usr: username, avt: null }, jwt_config.secret, { expiresIn: '7d' });
+    const token = jwt.sign({ id: docRef.id, name: helper.nameConcat(firstname, lastname), usr: username, avt: avatar }, jwt_config.secret, { expiresIn: '7d' });
     return res.json({token, msg: "Successfully signed up"});
   }
   catch (err) {
