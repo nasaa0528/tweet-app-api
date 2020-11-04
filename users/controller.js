@@ -230,7 +230,6 @@ const getUserHandler = async (req, res, next) => {
 
 const getProfileHandler = async (req, res, next) => {
   try {
-    throw {"status": 200, "statusTxt": "Test", "data": "test"};
     const userId = req.user.id;
     user = await db.collection("users").doc(userId).get();
     if (!user.exists){
