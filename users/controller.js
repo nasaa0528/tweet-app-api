@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../utils/config.js'); 
 const jwt_config = config.jwt_config; 
 const db = config.db;
+const firebase = require("firebase");
 
 const getAllUsersHandler = async (req, res, next) => {
   try {
@@ -166,7 +167,7 @@ const updateHandler = async (req, res, next) => {
     var lastname = req.body.lastname;
     var bio = req.body.bio;
     var user = req.user; 
-    var usertId = user.id;
+    var userId = user.id;
     //var username = payload.usr; 
     if (!avatar) {
       throw {"status": 400, "statusTxt": "avatar cannot be empty", "data": "Avatar cannot be empty, please upload the avatar"};
@@ -180,12 +181,23 @@ const updateHandler = async (req, res, next) => {
     if(!bio) {
       throw {"status": 400, "statusTxt": "Bio cannot be empty", "data": "bio cannot be empty"};
     }
-    await db.collection("users").doc(usertId).update({
+    await db.collection("users").doc(userId).update({
       "avatar": avatar,
       "firstname": firstname,
       "lastname": lastname,
       "bio": bio
     })
+
+    var postsSnap = await db.collection("posts").where('user.id', '==', userId).get(); 
+    let batch = db.batch();
+    postsSnap.forEach((doc) => {
+      const docRef = db.collection('posts').doc(doc.id);
+      batch.update(docRef, {
+        "user.fullname": helper.nameConcat(firstname, lastname),
+        "user.avatar": avatar
+      })
+    });
+    await batch.commit();
     res.json({ "msg": "Successfully updated!" });
   }
   catch (err) {
