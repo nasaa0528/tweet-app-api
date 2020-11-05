@@ -13,7 +13,4 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 exports.db = firebase.firestore();
 exports.timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-//module.exports = db;
-
 exports.jwt_config ={ "secret": "49a44cbeaa62456326b905c0abab43ec" };

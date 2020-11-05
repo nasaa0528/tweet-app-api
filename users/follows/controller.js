@@ -5,40 +5,40 @@ const firebase = require('firebase');
 
 const followHandler = async (req, res, next) => {
   try {
-    const userId = req.query.userid;
-    const user = {
+    const toFollowUserId = req.query.userid;
+    const loggedUser = {
       "id": req.user.id,
-      "name": req.user.name, 
-      "username": req.user.usr, 
+      "name": req.user.name,
+      "username": req.user.usr,
       "avatar": req.user.avt
     };
-    if (!userId) {
-      throw {"status": 400, "statusTxt": "userid cannot be empty", "data": "userid cannot be empty"}; 
+    if (!toFollowUserId) {
+      throw {"status": 400, "statusTxt": "userid cannot be empty", "data": "userid cannot be empty"};
     }
-    const userDoc = await db.collection("users").doc(userId).get();
+    const userDoc = await db.collection("users").doc(toFollowUserId).get();
     if (!userDoc.exists){
       throw { "status": 400, "statusTxt": "Invalid userid", "data": "invald userid" };
     }
-    followingSnap = await db.collection('users').doc(user.id).collection('following').doc(userDoc.id).get(); 
+    followingSnap = await db.collection('users').doc(loggedUser.id).collection('following').doc(userDoc.id).get();
 
     if (followingSnap.exists) {
       throw {"status": 400, "statusTxt": "You are already following this person", "data": "You are already following this person"};
     }
 
-    await db.collection('users').doc(user.id).collection('following').doc(userDoc.id).set({ 
-      'id': userDoc.id, 
-      'avatar': userDoc.data().avatar, 
-      'name': helper.nameConcat(userDoc.data().firstname, userDoc.data().lastname), 
+    await db.collection('users').doc(loggedUser.id).collection('following').doc(userDoc.id).set({
+      'id': userDoc.id,
+      'avatar': userDoc.data().avatar,
+      'name': helper.nameConcat(userDoc.data().firstname, userDoc.data().lastname),
       'username': userDoc.data().username
     }, {merge: true});
-    await db.collection('users').doc(user.id).update({ 
+    await db.collection('users').doc(loggedUser.id).update({
       following: firebase.firestore.FieldValue.increment(1)
     });
 
-    await db.collection('users').doc(userId).collection('followers').doc(user.id).set({
-      user, 
+    await db.collection('users').doc(toFollowUserId).collection('followers').doc(loggedUser.id).set({
+      loggedUser,
     }, {merge: true});
-    await db.collection('users').doc(userId).update({
+    await db.collection('users').doc(toFollowUserId).update({
       followers: firebase.firestore.FieldValue.increment(1)
     });
 
@@ -50,28 +50,28 @@ const followHandler = async (req, res, next) => {
 
 const unfollowHandler = async (req, res, next) => {
   try{
-    const user = {
+    const loggedUser = {
       "id": req.user.id,
-      "name": req.user.name, 
-      "username": req.user.usr, 
+      "name": req.user.name,
+      "username": req.user.usr,
       "avatar": req.user.avt
     };
-    const userId = req.query.userid; 
-    if (!userId){
-      throw {"status": 400, "statusTxt": "userid cannot be empty", "data": "userid cannot be empty"}; 
+    const toUnfollowUserId = req.query.userid;
+    if (!toUnfollowUserId){
+      throw {"status": 400, "statusTxt": "userid cannot be empty", "data": "userid cannot be empty"};
     }
-    const followingSnap = await db.collection('users').doc(user.id).collection('following').doc(userId).get(); 
-    
+    const followingSnap = await db.collection('users').doc(loggedUser.id).collection('following').doc(toUnfollowUserId).get();
+
     if(!followingSnap.exists) {
-      throw {"status": 400, "statusTxt": "You are not following this person", "data": "You are not following this person" }; 
+      throw {"status": 400, "statusTxt": "You are not following this person", "data": "You are not following this person" };
     }
-    
-    await db.collection('users').doc(user.id).collection('following').doc(userId).delete(); 
-    await db.collection('users').doc(user.id).update({
+
+    await db.collection('users').doc(loggedUser.id).collection('following').doc(toUnfollowUserId).delete();
+    await db.collection('users').doc(loggedUser.id).update({
       following: firebase.firestore.FieldValue.increment(-1)
     });
-    await db.collection('users').doc(userId).collection('followers').doc(user.id).delete(); 
-    await db.collection('users').doc(userId).update({
+    await db.collection('users').doc(toUnfollowUserId).collection('followers').doc(loggedUser.id).delete();
+    await db.collection('users').doc(toUnfollowUserId).update({
       followers: firebase.firestore.FieldValue.increment(-1)
     });
     res.json({ "msg": "Unfollowed successfully!"});
@@ -84,14 +84,14 @@ const followersHandler = async (req, res, next) => {
   try {
     const user = {
       "id": req.user.id,
-      "name": req.user.name, 
-      "username": req.user.usr, 
+      "name": req.user.name,
+      "username": req.user.usr,
       "avatar": req.user.avt
     };
-    const defaultPagesize = 20; 
-    const defaultPage = 1; 
-    const page = req.query.page || defaultPage; 
-    const pageSize = req.query.pagesize || defaultPagesize; 
+    const defaultPagesize = 20;
+    const defaultPage = 1;
+    const page = req.query.page || defaultPage;
+    const pageSize = req.query.pagesize || defaultPagesize;
     if (page <= 0 || pageSize <= 0) {
       throw { "status": 400, "statusTxt": "Page size and page cannot be negative", "data": "Page size or page cannot be negative" };
     }
@@ -107,7 +107,7 @@ const followersHandler = async (req, res, next) => {
       followers.push(follower);
     });
     var result = {
-      "meta": meta, 
+      "meta": meta,
       "followers": followers
     };
     return res.json(result);
@@ -121,14 +121,14 @@ const followingHandler = async (req, res, next) => {
   try {
     const user = {
       "id": req.user.id,
-      "name": req.user.name, 
-      "username": req.user.usr, 
+      "name": req.user.name,
+      "username": req.user.usr,
       "avatar": req.user.avt
     };
-    const defaultPagesize = 20; 
-    const defaultPage = 1; 
-    const page = req.query.page || defaultPage; 
-    const pageSize = req.query.pagesize || defaultPagesize; 
+    const defaultPagesize = 20;
+    const defaultPage = 1;
+    const page = req.query.page || defaultPage;
+    const pageSize = req.query.pagesize || defaultPagesize;
     if (page <= 0 || pageSize <= 0) {
       throw { "status": 400, "statusTxt": "Page size and page cannot be negative", "data": "Page size or page cannot be negative" };
     }
@@ -144,7 +144,7 @@ const followingHandler = async (req, res, next) => {
       followings.push(following);
     });
     var result = {
-      "meta": meta, 
+      "meta": meta,
       "followings": followings
     };
     return res.json(result);

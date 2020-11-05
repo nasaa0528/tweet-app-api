@@ -1,0 +1,2286 @@
+{
+	"info": {
+		"_postman_id": "3232eba9-0d2e-4ba8-8587-e8594cc099dc",
+		"name": "tweet-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Public",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkN5M3ZhZkhMN3RBSWU0OVdwVjBWIiwibmFtZSI6bnVsbCwidXNyIjoidXNlcjUiLCJhdnQiOm51bGwsImlhdCI6MTYwNDMxMDU5MiwiZXhwIjoxNjA0OTE1MzkyfQ.iogwlovyyzY9ltZiX1N8_aWJsYt0PEIFzSZLbBZ-GO4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usernameEmail\": \"user15@example.com\",\n    \"password\": \"testPassword\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Empty email or username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"usernameEmail\": \"\",\n    \"password\": \"testPassword1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-hBWnQi31IWvf7zOSWEJHf4ZuloA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 02:42:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Login name/email field cannot be empty!\"\n}"
+						},
+						{
+							"name": "Incorrect username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"usernameEmail\": \"user111@example.com\",\n    \"password\": \"testPassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-XTXJLC9qVlk8K5Kan/yQGreErqM\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 02:41:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized request\"\n}"
+						},
+						{
+							"name": "Incorrect Password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"usernameEmail\": \"user1@example.com\",\n    \"password\": \"testPassword1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-XTXJLC9qVlk8K5Kan/yQGreErqM\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 02:42:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized request\"\n}"
+						},
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"usernameEmail\": \"user1@example.com\",\n    \"password\": \"testPassword\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "278"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"116-puS3+LoxRUaP0jk0b3evIISeCYw\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 02:37:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhSWXBZd2plVkxvNU9BZWtiamNrIiwibmFtZSI6IkpvaG4gRG9lIiwidXNyIjoidXNlcjEiLCJhdnQiOiJ0ZXN0X3VybCIsImlhdCI6MTYwNDU0MzgyNywiZXhwIjoxNjA1MTQ4NjI3fQ.hWtRk5WvKkiAoNBhI3FFHwlzKvf6WNEXWHM4usrpVxU\",\n    \"msg\": \"Successfully authenticated\"\n}"
+						},
+						{
+							"name": "Empty password field",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"usernameEmail\": \"user1@example.com\",\n    \"password\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:3000/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b-IYVHo91LGXkuWDB/zW4ZDjWeT0w\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 02:43:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Password field cannot be empty!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"user20@example.com\",\n    \"username\": \"user20\",\n    \"password\": \"testPassword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"Nasaa\", \n    \"lastname\": \"A\",\n    \"avatar\": \"\"\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/users/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Username taken ",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user20@example.com\",\n    \"username\": \"user1\",\n    \"password\": \"testPassword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"Nasaa\", \n    \"lastname\": \"A\",\n    \"avatar\": \"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "80"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"50-5LnrlvCa7E5KDU6UFjQS2zy5s34\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 03:12:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"username is taken by someone else, try again with different username\"\n}"
+						},
+						{
+							"name": "Password confirm doesn't match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user19@example.com\",\n    \"username\": \"user19\",\n    \"password\": \"testPasssword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"Nasaa\", \n    \"lastname\": \"A\",\n    \"avatar\": \"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "56"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"38-Xhfx7rqT5Az3T/I45BJJ6TIzQEs\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 03:09:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Password and confirm password doesn't match!\"\n}"
+						},
+						{
+							"name": "Short username",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user17@example.com\",\n    \"username\": \"use\",\n    \"password\": \"testPassword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"Nasaa\", \n    \"lastname\": \"A\",\n    \"avatar\": \"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"36-iAmLd2q5IQDInGqkLbxSlr5DoJY\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 03:08:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Username must be longer than 4 characters!\"\n}"
+						},
+						{
+							"name": "Empty first name field",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user19@example.com\",\n    \"username\": \"user19\",\n    \"password\": \"testPassword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"\", \n    \"lastname\": \"A\",\n    \"avatar\": \"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-On+HJGpYQatm0dUrTEmhPiI6j2E\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 03:10:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Firstname cannot be empty\"\n}"
+						},
+						{
+							"name": "lastname empty ",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user19@example.com\",\n    \"username\": \"user19\",\n    \"password\": \"testPassword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"Nasaa\", \n    \"lastname\": \"\",\n    \"avatar\": \"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24-wongbyUVtmT5v+IlVLw/BdEslhM\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 03:11:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Lastname cannot be empty\"\n}"
+						},
+						{
+							"name": "Successful Signup",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user17@example.com\",\n    \"username\": \"user17\",\n    \"password\": \"testPassword\",\n    \"confirm\": \"testPassword\",\n    \"firstname\": \"Nasaa\", \n    \"lastname\": \"A\",\n    \"avatar\": \"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/signup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"signup"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "295"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"127-fanale6aQY4QANmcAsuIgoTtkKc\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 05 Nov 2020 03:07:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkJLQ01UdlVVbDdVV1NhbEJFMUpzIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyMTciLCJhdnQiOiJkZWZhdWx0X3BhdGhfcGxhY2Vob2xkZXIiLCJpYXQiOjE2MDQ1NDU2NjQsImV4cCI6MTYwNTE1MDQ2NH0.EMABYyT-S59Yb37kyvGTmgS871EgU1C22v2GJu8Sfy8\",\n    \"msg\": \"Successfully signed up\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Private",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "follow",
+							"item": [
+								{
+									"name": "Following",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6InNoaW5lIG5lciBvdm9nIiwidXNyIjoidXNlcjUiLCJhdnQiOiJ1cmxfYXZhdGFyIiwiaWF0IjoxNjA0NTQ0MzM4LCJleHAiOjE2MDUxNDkxMzh9.P1kkJGfW3vCyiFBh44f8mQCbOSpaK9wQqXAnSOEcALg",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/follows/following",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"follows",
+												"following"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:3000/follows/following",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"follows",
+														"following"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "X-Powered-By",
+													"value": "Express"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Content-Length",
+													"value": "180"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"b4-pnlFOEvdkDnfLrZEJlvHPekx+k0\""
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 05 Nov 2020 06:19:49 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"meta\": {\n        \"total\": 1,\n        \"requested_page\": 1\n    },\n    \"followings\": [\n        {\n            \"followerId\": \"3d1mYvQHl4oXondDYILs\",\n            \"name\": \"Nasaa A\",\n            \"avatar\": \"default_path\",\n            \"username\": \"user9\",\n            \"id\": \"3d1mYvQHl4oXondDYILs\"\n        }\n    ]\n}"
+										}
+									]
+								},
+								{
+									"name": "follower",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNkMW1ZdlFIbDRvWG9uZERZSUxzIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyOSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDU0NDQxNiwiZXhwIjoxNjA1MTQ5MjE2fQ.ccKXTgN5GI13wXL-lPFFvUWqTLq02Qht0DL-qp0buMk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/follows/follower",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"follows",
+												"follower"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "unfollow by userID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyNSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDQ1NTM3MiwiZXhwIjoxNjA1MDYwMTcyfQ.ms6AekgFQcsDD7uOL8xyvz8dqiYOY1UHYkHKlLXhBzI",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/follows/unfollow?userid=5m4BBrwpzoLS8gednkjv",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"follows",
+												"unfollow"
+											],
+											"query": [
+												{
+													"key": "userid",
+													"value": "5m4BBrwpzoLS8gednkjv"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "unfollow by userID",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "unfollow by userID success",
+													"host": [
+														"unfollow by userID success"
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "X-Powered-By",
+													"value": "Express"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Content-Length",
+													"value": "45"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"2d-Re92PYmQ2bzL00MrWl/Q5EekX7E\""
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 05 Nov 2020 06:22:07 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"error\": \"You are not following this person\"\n}"
+										}
+									]
+								},
+								{
+									"name": "follow by userID",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyNSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDQ1NTM3MiwiZXhwIjoxNjA1MDYwMTcyfQ.ms6AekgFQcsDD7uOL8xyvz8dqiYOY1UHYkHKlLXhBzI",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/follows/follow?userid=5m4BBrwpzoLS8gednkjv",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"follows",
+												"follow"
+											],
+											"query": [
+												{
+													"key": "userid",
+													"value": "5m4BBrwpzoLS8gednkjv"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "follow by userID",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "localhost:3000/follows/follow?userid=5m4BBrwpzoLS8gednkjv",
+													"host": [
+														"localhost"
+													],
+													"port": "3000",
+													"path": [
+														"follows",
+														"follow"
+													],
+													"query": [
+														{
+															"key": "userid",
+															"value": "5m4BBrwpzoLS8gednkjv"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "X-Powered-By",
+													"value": "Express"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Content-Length",
+													"value": "32"
+												},
+												{
+													"key": "ETag",
+													"value": "W/\"20-b4+zCbv/mfE+a76El+flmjFJD7s\""
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 05 Nov 2020 06:21:04 GMT"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Keep-Alive",
+													"value": "timeout=5"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"msg\": \"Followed Successfully \"\n}"
+										}
+									]
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhSWXBZd2plVkxvNU9BZWtiamNrIiwibmFtZSI6IkpvaG4gRG9lIiwidXNyIjoidXNlcjEiLCJhdnQiOiJ0ZXN0X3VybCIsImlhdCI6MTYwNDU0NDI3MiwiZXhwIjoxNjA1MTQ5MDcyfQ.r4T94Pr7epb8_1_L0gIJ67r7FEQsQKkfaxqU9JZlDUc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"avatar\": \"\",\n    \"firstname\": \"user-firsname-new\",\n    \"lastname\": \"updated-lastname\",\n    \"bio\": \"Bio is here\"\n}"
+								},
+								"url": {
+									"raw": "localhost:3000/users/update",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"update"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "noToken",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"avatar\": \"url_avatar\",\n    \"firstname\": \"shine ner\",\n    \"lastname\": \"ovog\",\n    \"bio\": \"this is sample bio1 1asd updated!\"\n}"
+										},
+										"url": {
+											"raw": "localhost:3000/users/update",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"update"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "29"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d-AP2nCqxSW2Af0NlwpQiJEHIEwUU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:22:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Unauthorized source\"\n}"
+								},
+								{
+									"name": "empty field ",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"avatar\": \"\",\n    \"firstname\": \"user-firsname-new\",\n    \"lastname\": \"updated-lastname\",\n    \"bio\": \"Bio is here\"\n}"
+										},
+										"url": {
+											"raw": "localhost:3000/users/update",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"update"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "60"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3c-ai9z8PiqObCbHDbprFFEKDcq+lQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:33:02 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"error\": \"Avatar cannot be empty, please upload the avatar\"\n}"
+								},
+								{
+									"name": "successful update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"avatar\": \"new_url_avatar\",\n    \"firstname\": \"user-firsname-new\",\n    \"lastname\": \"updated-lastname\",\n    \"bio\": \"Bio is here\"\n}"
+										},
+										"url": {
+											"raw": "localhost:3000/users/update",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"update"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "31"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1f-gJXtFXBaXmNnkD8y4ywwoVLk8Ts\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:32:28 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Successfully updated!\"\n}"
+								}
+							]
+						},
+						{
+							"name": "my profile",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkhSWXBZd2plVkxvNU9BZWtiamNrIiwibmFtZSI6IkpvaG4gRG9lIiwidXNyIjoidXNlcjEiLCJhdnQiOiJ0ZXN0X3VybCIsImlhdCI6MTYwNDU0NDI3MiwiZXhwIjoxNjA1MTQ5MDcyfQ.r4T94Pr7epb8_1_L0gIJ67r7FEQsQKkfaxqU9JZlDUc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost:3000/users/me",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "With token",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "localhost:3000/users/me",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"me"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "339"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"153-MGXgTdIKufmL5Cd0WMoodIBZ1cY\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:40:37 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"HRYpYwjeVLo5OAekbjck\",\n    \"email\": \"user1@example.com\",\n    \"bio\": \"Bio is here\",\n    \"created\": {\n        \"seconds\": 1604392338,\n        \"nanoseconds\": 163000000\n    },\n    \"hash\": \"$2b$10$iGYKtDmks39H.9lVDUtaC.QsAOPnwnnndoBVQM5DvtNuLku6DLa5O\",\n    \"followers\": 0,\n    \"lastname\": \"updated-lastname\",\n    \"username\": \"user1\",\n    \"following\": 0,\n    \"firstname\": \"user-firsname-new\",\n    \"avatar\": \"new_url_avatar\"\n}"
+								},
+								{
+									"name": "NoToken",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "localhost:3000/users/me",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"me"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "29"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d-AP2nCqxSW2Af0NlwpQiJEHIEwUU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:40:12 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Unauthorized source\"\n}"
+								}
+							]
+						},
+						{
+							"name": "get user profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJoUmI0MFRzWjExRGZ0TmxSdXlhIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyMTEiLCJhdnQiOiJkZWZhdWx0X3BhdGgiLCJpYXQiOjE2MDQ1NDQ0NTMsImV4cCI6MTYwNTE0OTI1M30.2D3VYZQ4fxTZsDSKffIzSMWhjA4nZ8Uh4Whvf-jOnEQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/users/3d1mYvQHl4oXondDYILs",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"3d1mYvQHl4oXondDYILs"
+									]
+								},
+								"description": "http://ip_addr:3000/users/:id"
+							},
+							"response": [
+								{
+									"name": "with Token",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/users/3d1mYvQHl4oXondDYILs",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"3d1mYvQHl4oXondDYILs"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "97"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"61-MnjG6PSc1xwJlUcWC4TiM75XyTU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:49:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"3d1mYvQHl4oXondDYILs\",\n    \"username\": \"user9\",\n    \"fullname\": \"Nasaa A\",\n    \"followers\": 1,\n    \"following\": 0\n}"
+								},
+								{
+									"name": "NoToken",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/users/3d1mYvQHl4oXondDYILs",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users",
+												"3d1mYvQHl4oXondDYILs"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "29"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d-AP2nCqxSW2Af0NlwpQiJEHIEwUU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 03:49:22 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Unauthorized source\"\n}"
+								}
+							]
+						},
+						{
+							"name": "get all users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlBFSExxbXFwcTN0UnJ3OEJJcnU0IiwibmFtZSI6bnVsbCwidXNyIjoidXNlcjExIiwiYXZ0IjpudWxsLCJpYXQiOjE2MDQzMTA5MDksImV4cCI6MTYwNDkxNTcwOX0.8zNklL0a09UJeYB2vsOZcXwUukibT4er0eYRVEvXwr4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/users",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "noToken",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/users",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "29"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d-AP2nCqxSW2Af0NlwpQiJEHIEwUU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:10:21 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Unauthorized source\"\n}"
+								},
+								{
+									"name": "successful",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/users",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2206"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"89e-ygiM1HTnG/qZQ1Hc8ge7pFFK5Nk\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:07:45 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"meta\": {\n        \"total\": 17,\n        \"requestedPage\": 1,\n        \"usersInPage\": 17\n    },\n    \"users\": [\n        {\n            \"id\": \"HRYpYwjeVLo5OAekbjck\",\n            \"avatar\": \"new_url_avatar\",\n            \"fullname\": \"user-firsname-new updated-lastname\",\n            \"username\": \"user1\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"MVMDjJmZsCalHPqPdwKH\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user2\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"5m4BBrwpzoLS8gednkjv\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user3\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"k5n7PtjKB0PZvft8v0de\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user4\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"0KJlTXIrZqXo03euJJAX\",\n            \"avatar\": \"url_avatar\",\n            \"fullname\": \"shine ner ovog\",\n            \"username\": \"user5\",\n            \"followers\": 0,\n            \"following\": 1\n        },\n        {\n            \"id\": \"P8IEmuWBfvmBkMnNkuoU\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user6\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"LcmKzaU4dKm7mUL9Ex2f\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user7\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"8AWkWgxJIbeWNIIw6lO7\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user8\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"3d1mYvQHl4oXondDYILs\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user9\",\n            \"followers\": 1,\n            \"following\": 0\n        },\n        {\n            \"id\": \"cQr2DVYDLQO7W2KhBs6t\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user10\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"rhRb40TsZ11DftNlRuya\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user11\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"nivgEDEXKIm4RzabTp3r\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user12\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"Xw9QO8beccbqLy07VEAe\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user13\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"DCC72DcWlFHVKRCaAUKQ\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user14\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"u7wSmX7paXppTpItgJ62\",\n            \"avatar\": \"default_path\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user15\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"BKCMTvUUl7UWSalBE1Js\",\n            \"avatar\": \"default_path_placeholder\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user17\",\n            \"followers\": 0,\n            \"following\": 0\n        },\n        {\n            \"id\": \"YinpD1hUfhlJOO9acRdr\",\n            \"avatar\": \"default_path_placeholder\",\n            \"fullname\": \"Nasaa A\",\n            \"username\": \"user20\",\n            \"followers\": 0,\n            \"following\": 0\n        }\n    ]\n}"
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "posts",
+					"item": [
+						{
+							"name": "add Post",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyNSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDQ1NTM3MiwiZXhwIjoxNjA1MDYwMTcyfQ.ms6AekgFQcsDD7uOL8xyvz8dqiYOY1UHYkHKlLXhBzI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"post\": \"this is post 10010\"}"
+								},
+								"url": {
+									"raw": "localhost:3000/posts/add",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"posts",
+										"add"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "with token",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"post\": \"this is post 10010\"}"
+										},
+										"url": {
+											"raw": "localhost:3000/posts/add",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"posts",
+												"add"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "66"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"42-ABK3pWG9wm8ICpIg/al2eGQ6auA\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:14:36 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Post is added successfully with id: LRfmQDSSfW9qzip18igo\"\n}"
+								},
+								{
+									"name": "No Token",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"post\": \"this is post 10\"}"
+										},
+										"url": {
+											"raw": "localhost:3000/posts/add",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"posts",
+												"add"
+											]
+										}
+									},
+									"status": "Forbidden",
+									"code": 403,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "29"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1d-AP2nCqxSW2Af0NlwpQiJEHIEwUU\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:13:47 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"msg\": \"Unauthorized source\"\n}"
+								}
+							]
+						},
+						{
+							"name": "get all posts (Home page)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyNSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDQ1NTM3MiwiZXhwIjoxNjA1MDYwMTcyfQ.ms6AekgFQcsDD7uOL8xyvz8dqiYOY1UHYkHKlLXhBzI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/posts?userid=0KJlTXIrZqXo03euJJAX",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "userid",
+											"value": "0KJlTXIrZqXo03euJJAX"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/posts?userid=0KJlTXIrZqXo03euJJAX",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "userid",
+													"value": "0KJlTXIrZqXo03euJJAX"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "3148"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c4c-9IqWjpBb9Rwxa/lovNkKdF9H0CI\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:18:43 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"meta\": {\n        \"total\": 12,\n        \"requested_page\": 1\n    },\n    \"posts\": [\n        {\n            \"postId\": \"LRfmQDSSfW9qzip18igo\",\n            \"created\": {\n                \"seconds\": 1604549676,\n                \"nanoseconds\": 777000000\n            },\n            \"post\": \"this is post 10010\",\n            \"user\": {\n                \"fullname\": \"Nasaa A\",\n                \"username\": \"user5\",\n                \"avatar\": \"default_path\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            }\n        },\n        {\n            \"postId\": \"20HPWSjFqMhtlr4732Fj\",\n            \"post\": \"this is post 10\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"avatar\": \"default_path\",\n                \"fullname\": \"Nasaa A\"\n            },\n            \"created\": {\n                \"seconds\": 1604549619,\n                \"nanoseconds\": 201000000\n            }\n        },\n        {\n            \"postId\": \"0hDEiuifnrl3esJhL4rj\",\n            \"created\": {\n                \"seconds\": 1604455418,\n                \"nanoseconds\": 491000000\n            },\n            \"post\": \"this is post 10\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\"\n            }\n        },\n        {\n            \"postId\": \"pgb045BqivyyV0IKmUrH\",\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"created\": {\n                \"seconds\": 1604455414,\n                \"nanoseconds\": 148000000\n            },\n            \"post\": \"this is post 9\",\n            \"fullname\": \"shine ner ovog\",\n            \"avatar\": \"url_avatar\"\n        },\n        {\n            \"postId\": \"TMYpknwDLEiKuUsg8gbd\",\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            },\n            \"fullname\": \"shine ner ovog\",\n            \"created\": {\n                \"seconds\": 1604455410,\n                \"nanoseconds\": 737000000\n            },\n            \"avatar\": \"url_avatar\",\n            \"post\": \"this is post 8\"\n        },\n        {\n            \"postId\": \"i3UA4G9zkI8tUYLNopEV\",\n            \"fullname\": \"shine ner ovog\",\n            \"avatar\": \"url_avatar\",\n            \"user\": {\n                \"fullname\": \"shine ner ovog\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\"\n            },\n            \"post\": \"this is post 7\",\n            \"created\": {\n                \"seconds\": 1604455407,\n                \"nanoseconds\": 681000000\n            }\n        },\n        {\n            \"postId\": \"uGwW84jIVd2s0JQynGjZ\",\n            \"created\": {\n                \"seconds\": 1604455403,\n                \"nanoseconds\": 629000000\n            },\n            \"post\": \"this is post 6\",\n            \"avatar\": \"url_avatar\",\n            \"fullname\": \"shine ner ovog\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            }\n        },\n        {\n            \"postId\": \"hijou6LChaZHIhMfvEYb\",\n            \"avatar\": \"url_avatar\",\n            \"post\": \"this is post 5\",\n            \"fullname\": \"shine ner ovog\",\n            \"user\": {\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"created\": {\n                \"seconds\": 1604455400,\n                \"nanoseconds\": 572000000\n            }\n        },\n        {\n            \"postId\": \"F7PM192PvjCkCCiOT50R\",\n            \"avatar\": \"url_avatar\",\n            \"created\": {\n                \"seconds\": 1604455397,\n                \"nanoseconds\": 289000000\n            },\n            \"user\": {\n                \"fullname\": \"shine ner ovog\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\"\n            },\n            \"fullname\": \"shine ner ovog\",\n            \"post\": \"this is post 4\"\n        },\n        {\n            \"postId\": \"sGiyvFmF5baDGDlvKFTG\",\n            \"avatar\": \"url_avatar\",\n            \"post\": \"this is post 3\",\n            \"fullname\": \"shine ner ovog\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            },\n            \"created\": {\n                \"seconds\": 1604455394,\n                \"nanoseconds\": 180000000\n            }\n        },\n        {\n            \"postId\": \"z74XrqeJoaPlxnQmeTKM\",\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"fullname\": \"shine ner ovog\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\"\n            },\n            \"avatar\": \"url_avatar\",\n            \"created\": {\n                \"seconds\": 1604455390,\n                \"nanoseconds\": 641000000\n            },\n            \"post\": \"this is post 2\",\n            \"fullname\": \"shine ner ovog\"\n        },\n        {\n            \"postId\": \"maSM2AvznlqwI4mfR8gU\",\n            \"post\": \"this is post 1\",\n            \"avatar\": \"url_avatar\",\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"created\": {\n                \"seconds\": 1604455386,\n                \"nanoseconds\": 913000000\n            },\n            \"fullname\": \"shine ner ovog\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "get posts of other user with his ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyNSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDQ1NTM3MiwiZXhwIjoxNjA1MDYwMTcyfQ.ms6AekgFQcsDD7uOL8xyvz8dqiYOY1UHYkHKlLXhBzI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/posts?userid=0KJlTXIrZqXo03euJJAX",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "userid",
+											"value": "0KJlTXIrZqXo03euJJAX"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/posts?userid=0KJlTXIrZqXo03euJJAX",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"posts"
+											],
+											"query": [
+												{
+													"key": "userid",
+													"value": "0KJlTXIrZqXo03euJJAX"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "3148"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"c4c-6kNrO7uqNYXR9E64VeDGMbdBRZo\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:20:15 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"meta\": {\n        \"total\": 12,\n        \"requested_page\": 1\n    },\n    \"posts\": [\n        {\n            \"postId\": \"LRfmQDSSfW9qzip18igo\",\n            \"user\": {\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\",\n                \"fullname\": \"Nasaa A\",\n                \"avatar\": \"default_path\"\n            },\n            \"post\": \"this is post 10010\",\n            \"created\": {\n                \"seconds\": 1604549676,\n                \"nanoseconds\": 777000000\n            }\n        },\n        {\n            \"postId\": \"20HPWSjFqMhtlr4732Fj\",\n            \"post\": \"this is post 10\",\n            \"created\": {\n                \"seconds\": 1604549619,\n                \"nanoseconds\": 201000000\n            },\n            \"user\": {\n                \"username\": \"user5\",\n                \"avatar\": \"default_path\",\n                \"fullname\": \"Nasaa A\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            }\n        },\n        {\n            \"postId\": \"0hDEiuifnrl3esJhL4rj\",\n            \"post\": \"this is post 10\",\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            },\n            \"created\": {\n                \"seconds\": 1604455418,\n                \"nanoseconds\": 491000000\n            }\n        },\n        {\n            \"postId\": \"pgb045BqivyyV0IKmUrH\",\n            \"fullname\": \"shine ner ovog\",\n            \"post\": \"this is post 9\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"created\": {\n                \"seconds\": 1604455414,\n                \"nanoseconds\": 148000000\n            },\n            \"avatar\": \"url_avatar\"\n        },\n        {\n            \"postId\": \"TMYpknwDLEiKuUsg8gbd\",\n            \"avatar\": \"url_avatar\",\n            \"post\": \"this is post 8\",\n            \"user\": {\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"fullname\": \"shine ner ovog\",\n            \"created\": {\n                \"seconds\": 1604455410,\n                \"nanoseconds\": 737000000\n            }\n        },\n        {\n            \"postId\": \"i3UA4G9zkI8tUYLNopEV\",\n            \"fullname\": \"shine ner ovog\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"created\": {\n                \"seconds\": 1604455407,\n                \"nanoseconds\": 681000000\n            },\n            \"post\": \"this is post 7\",\n            \"avatar\": \"url_avatar\"\n        },\n        {\n            \"postId\": \"uGwW84jIVd2s0JQynGjZ\",\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\",\n                \"username\": \"user5\"\n            },\n            \"fullname\": \"shine ner ovog\",\n            \"avatar\": \"url_avatar\",\n            \"created\": {\n                \"seconds\": 1604455403,\n                \"nanoseconds\": 629000000\n            },\n            \"post\": \"this is post 6\"\n        },\n        {\n            \"postId\": \"hijou6LChaZHIhMfvEYb\",\n            \"post\": \"this is post 5\",\n            \"avatar\": \"url_avatar\",\n            \"fullname\": \"shine ner ovog\",\n            \"created\": {\n                \"seconds\": 1604455400,\n                \"nanoseconds\": 572000000\n            },\n            \"user\": {\n                \"fullname\": \"shine ner ovog\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\"\n            }\n        },\n        {\n            \"postId\": \"F7PM192PvjCkCCiOT50R\",\n            \"fullname\": \"shine ner ovog\",\n            \"created\": {\n                \"seconds\": 1604455397,\n                \"nanoseconds\": 289000000\n            },\n            \"user\": {\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"post\": \"this is post 4\",\n            \"avatar\": \"url_avatar\"\n        },\n        {\n            \"postId\": \"sGiyvFmF5baDGDlvKFTG\",\n            \"post\": \"this is post 3\",\n            \"user\": {\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\",\n                \"avatar\": \"url_avatar\"\n            },\n            \"avatar\": \"url_avatar\",\n            \"created\": {\n                \"seconds\": 1604455394,\n                \"nanoseconds\": 180000000\n            },\n            \"fullname\": \"shine ner ovog\"\n        },\n        {\n            \"postId\": \"z74XrqeJoaPlxnQmeTKM\",\n            \"post\": \"this is post 2\",\n            \"fullname\": \"shine ner ovog\",\n            \"avatar\": \"url_avatar\",\n            \"created\": {\n                \"seconds\": 1604455390,\n                \"nanoseconds\": 641000000\n            },\n            \"user\": {\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\",\n                \"fullname\": \"shine ner ovog\"\n            }\n        },\n        {\n            \"postId\": \"maSM2AvznlqwI4mfR8gU\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"post\": \"this is post 1\",\n            \"avatar\": \"url_avatar\",\n            \"created\": {\n                \"seconds\": 1604455386,\n                \"nanoseconds\": 913000000\n            },\n            \"fullname\": \"shine ner ovog\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "get all of your posts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBLSmxUWElyWnFYbzAzZXVKSkFYIiwibmFtZSI6Ik5hc2FhIEEiLCJ1c3IiOiJ1c2VyNSIsImF2dCI6ImRlZmF1bHRfcGF0aCIsImlhdCI6MTYwNDQ1NTM3MiwiZXhwIjoxNjA1MDYwMTcyfQ.ms6AekgFQcsDD7uOL8xyvz8dqiYOY1UHYkHKlLXhBzI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:3000/posts/myposts",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"posts",
+										"myposts"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/posts/myposts",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"posts",
+												"myposts"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1251"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"4e3-MRrWCw3FRwkbCi0zkvpQZRZPPe8\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 05 Nov 2020 04:21:37 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"meta\": {\n        \"total\": 12,\n        \"requested_page\": 1\n    },\n    \"posts\": [\n        {\n            \"postId\": \"LRfmQDSSfW9qzip18igo\",\n            \"user\": {\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"avatar\": \"default_path\",\n                \"username\": \"user5\",\n                \"fullname\": \"Nasaa A\"\n            },\n            \"post\": \"this is post 10010\",\n            \"created\": {\n                \"seconds\": 1604549676,\n                \"nanoseconds\": 777000000\n            }\n        },\n        {\n            \"postId\": \"20HPWSjFqMhtlr4732Fj\",\n            \"user\": {\n                \"avatar\": \"default_path\",\n                \"fullname\": \"Nasaa A\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\"\n            },\n            \"created\": {\n                \"seconds\": 1604549619,\n                \"nanoseconds\": 201000000\n            },\n            \"post\": \"this is post 10\"\n        },\n        {\n            \"postId\": \"0hDEiuifnrl3esJhL4rj\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"avatar\": \"url_avatar\",\n                \"fullname\": \"shine ner ovog\"\n            },\n            \"created\": {\n                \"seconds\": 1604455418,\n                \"nanoseconds\": 491000000\n            },\n            \"post\": \"this is post 10\"\n        },\n        {\n            \"postId\": \"pgb045BqivyyV0IKmUrH\",\n            \"user\": {\n                \"fullname\": \"shine ner ovog\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\",\n                \"username\": \"user5\",\n                \"avatar\": \"url_avatar\"\n            },\n            \"avatar\": \"url_avatar\",\n            \"fullname\": \"shine ner ovog\",\n            \"created\": {\n                \"seconds\": 1604455414,\n                \"nanoseconds\": 148000000\n            },\n            \"post\": \"this is post 9\"\n        },\n        {\n            \"postId\": \"TMYpknwDLEiKuUsg8gbd\",\n            \"created\": {\n                \"seconds\": 1604455410,\n                \"nanoseconds\": 737000000\n            },\n            \"fullname\": \"shine ner ovog\",\n            \"avatar\": \"url_avatar\",\n            \"post\": \"this is post 8\",\n            \"user\": {\n                \"username\": \"user5\",\n                \"fullname\": \"shine ner ovog\",\n                \"avatar\": \"url_avatar\",\n                \"id\": \"0KJlTXIrZqXo03euJJAX\"\n            }\n        }\n    ]\n}"
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b66f125d-6640-460e-b6ec-4f73afac1a7e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "18ea97c7-8492-40b3-9e1e-a5ce36f1b037",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

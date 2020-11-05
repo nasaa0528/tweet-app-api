@@ -1,20 +1,20 @@
 exports.isEmail = (usernameEmail) => {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(usernameEmail).toLowerCase());
-}; 
+};
 
 exports.usernameParser = (usernameEmail) => {
   if (!usernameEmail) {
-    return false; 
+    return false;
   }
-  return true; 
+  return true;
 }
 
 exports.passwordParser = (password) => {
   if (!password) {
-    return false; 
+    return false;
   }
-  return true; 
+  return true;
 }
 
 exports.nameConcat = (firstname, lastname) => {
@@ -29,12 +29,12 @@ exports.isItOnlyOne = (snapshot) => {
 }
 
 exports.errorHandler = (res,err) => {
-  console.log(err); 
-  let {status, statusTxt, data} = err;
+  console.log("Error:", err);
+  let { status, statusTxt, data } = err;
   if (!status) {
     status = 500;
     statusTxt = err.statusTxt;
     data = err;
   }
-  res.status(status).json(data);
+  res.status(status).json({"error": data});
 }
